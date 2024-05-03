@@ -1,0 +1,36 @@
+spring:
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+            required: 'true'
+          auth: 'true'
+    username: samahmahdi22@gmail.com
+    host: smtp.gmail.com
+    password: ejfiixnybohuuttd
+    port: '587'
+  application:
+    name: mail-service
+  rabbitmq:
+    host: localhost
+    password: guest
+    port: 5672
+    username: guest
+
+server:
+  port: '8085'
+
+rabbitmq:
+  json:
+    queue:
+      name: queue1_json
+  queue:
+    name: queue1
+  routingjson-key:
+    name: routing_key1_json
+  routing-key:
+    name: routing_key1
+  topic-exchange:
+    name: topicExchange1

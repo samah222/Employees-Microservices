@@ -1,0 +1,121 @@
+application:
+  version: 0.1
+server:
+  port: 8070
+logging:
+  file:
+    path: application.log
+
+spring:
+  profiles:
+    active: dev
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  application:
+    name: Employees management system
+  datasource:
+    password: E15@root
+    url: jdbc:mysql://localhost:3306/employees_development
+    username: root
+  http:
+    converters:
+      preferred-json-mapper: jackson
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  rabbitmq:
+    host: localhost
+    password: guest
+    port: 5672
+    username: guest
+
+rabbitmq:
+  json:
+    queue:
+      name: queue1_json
+  queue:
+    name: queue1
+  routingMail-key:
+    name: routing_key1_json
+  routing-key:
+    name: routing_key1
+  topic-exchange:
+    name: topicExchange1
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "pro"
+  application:
+    name: Employees management system
+  datasource:
+    password: E15@root
+    url: jdbc:mysql://localhost:3306/employees_production
+    username: root
+  http:
+    converters:
+      preferred-json-mapper: jackson
+  jpa:
+    hibernate:
+      ddl-auto: none
+  rabbitmq:
+    host: localhost
+    password: guest
+    port: 5672
+    username: guest
+
+rabbitmq:
+  json:
+    queue:
+      name: queue1_json
+  queue:
+    name: queue1
+  routingMail-key:
+    name: routing_key1_json
+  routing-key:
+    name: routing_key1
+  topic-exchange:
+    name: topicExchange1
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+  application:
+    name: Employees management system
+  datasource:
+    password: E15@root
+    url: jdbc:mysql://localhost:3306/employees_QA
+    username: root
+  http:
+    converters:
+      preferred-json-mapper: jackson
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  rabbitmq:
+    host: localhost
+    password: guest
+    port: 5672
+    username: guest
+
+rabbitmq:
+  queue:
+    name: queue1
+  json:
+    queue:
+      name: queue1_json
+  routingMail-key:
+    name: routing_key1_json
+  routing-key:
+    name: routing_key1
+  topic-exchange:
+    name: topicExchange1
