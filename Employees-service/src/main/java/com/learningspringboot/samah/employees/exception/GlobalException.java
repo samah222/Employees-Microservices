@@ -8,7 +8,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalException {
     @ExceptionHandler(EmployeeNotFoundException.class)
-    public ProblemDetail handleUserNotFoundException(EmployeeNotFoundException ex) {
+    public ProblemDetail handleEmployeeNotFoundException(EmployeeNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), ex.getMessage());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ProblemDetail handleUserNotFoundException(UserNotFoundException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), ex.getMessage());
         return problemDetail;
     }

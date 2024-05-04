@@ -15,7 +15,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "dev"
+      on-profile: 'dev'
   application:
     name: Employees management system
   datasource:
@@ -27,7 +27,8 @@ spring:
       preferred-json-mapper: jackson
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+      show-sql: true
   rabbitmq:
     host: localhost
     password: guest

@@ -1,5 +1,6 @@
 package com.learningspringboot.samah.employees.model;
 
+import com.learningspringboot.samah.employees.Util.EmployeeType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -9,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,23 +18,19 @@ import java.util.Date;
 @Builder
 @Entity
 
-public class Employee {
-
+public class Employee  extends TrackingEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Integer Id;
 
-    @Size(min = 2, max=50, message = "name should be between 2 and 50 characters")
+    @Size(min = 2, max=50, message = "employee name should be between 2 and 50 characters")
     @Column(name = "name", nullable = false )
     @NotBlank
-    private String name;
-
-    @Min(1000)
-    private double salary;
+    private String employeeName;
 
     @Email
     @NotBlank
-    //@Column(unique = true)
+    @Column(unique = true)
     private String email;
 
     //@Pattern(regexp ="^\\+[0-9]+$")
@@ -44,19 +41,33 @@ public class Employee {
     private String jobTitle;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "department_id", nullable = false)
+    @JoinColumn(name = "department_id") //, nullable = false
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Department department;
-    
-    @CreationTimestamp
-    @Column(name="created_at")
-    private LocalDateTime createdAt;
-    
-    @UpdateTimestamp
-    @Column(name="updated_at", nullable = false, updatable = false)
-    private LocalDateTime updatedAt;
 
     @Embedded
     private Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private Employee manager;
+
+    @ManyToMany
+    @JoinTable(
+            name = "projects_employees",
+            joinColumns = {
+                    @JoinColumn(name = "employee_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "project_id")
+            }
+    )
+    private List<Project> projects;
+
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "employee_type")
+    private EmployeeType employeeType ;
 
 }

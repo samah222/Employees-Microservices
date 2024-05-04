@@ -2,7 +2,7 @@ package com.learningspringboot.samah.employees.service;
 
 import com.learningspringboot.samah.employees.model.Employee;
 import com.learningspringboot.samah.employees.repository.EmployeeRepository;
-import com.learningspringboot.samah.employees.service.EmployeeServiceImpl;
+import com.learningspringboot.samah.employees.service.impl.EmployeeServiceImpl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

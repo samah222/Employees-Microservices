@@ -17,19 +17,20 @@ public class DataInitializer {
     private DepartmentRepository departmentRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
-    Department department1 = new Department(1,"Sale");
-    @PostConstruct
+    Department department1 = new Department(1,"Sale", null);
+    //@PostConstruct
     public void initialize() {
         initializeDepartment();
-        initializeEmployee();
+        //initializeEmployee();
     }
 
-    private void initializeEmployee() {
-        Employee emp = new Employee(1L,"Samah Mahdi",10000, "samah.mahdi@gmail.com",
-                "0555555550","General Manager",department1, LocalDateTime.now(),LocalDateTime.now(),
-                new Address("street1","city1","state1","postal code1","Country"));
-        employeeRepository.save(emp);
-    }
+//    private void initializeEmployee() {
+//        Employee emp = new Employee(1,"Samah Mahdi",10000, "samah.mahdi@gmail.com",
+//                "0555555550","General Manager",department1, LocalDateTime.now(),LocalDateTime.now(),
+//                new Address("street1","city1","state1","postal code1","Country"),
+//                null,null);
+//        employeeRepository.save(emp);
+//    }
 
     private void initializeDepartment() {
         departmentRepository.save(department1);

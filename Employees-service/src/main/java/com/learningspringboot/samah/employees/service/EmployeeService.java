@@ -3,7 +3,6 @@ package com.learningspringboot.samah.employees.service;
 import com.learningspringboot.samah.employees.model.Employee;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EmployeeService {
     public List<Employee> getAllEmployees(int pageNumber, int pageSize);
@@ -12,15 +11,15 @@ public interface EmployeeService {
 
     public Employee editEmployee(Employee employee);
 
-    public Employee getEmployee(Long id);
+    public Employee getEmployee(int id);
 
-    public void deleteEmployee(Long Id);
+    public void deleteEmployee(int Id);
 
-//    List<Employee> getEmployeesByDepartment(String department);
+    List<Employee> getEmployeesByDepartment(String department);
 
-    List<Employee> getEmployeesBySalaryBetween(double min, double max);
+    //List<Employee> getEmployeesBySalaryBetween(double min, double max);
 
-//    List<Employee> getEmployeesByNameAndDepartment(String name, String department);
+    List<Employee> getEmployeesByNameAndDepartmentName(String name, String department);
 
     List<Employee> getEmployeesByNameContaining(String keyword);
 

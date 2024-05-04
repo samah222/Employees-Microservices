@@ -1,22 +1,27 @@
 package com.learningspringboot.samah.employees.repository;
 
 import com.learningspringboot.samah.employees.model.Employee;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface EmployeeRepository extends PagingAndSortingRepository<Employee,Long>, JpaRepository<Employee, Long> {
-//    public List<Employee> findByDepartment(String department);
+@Repository
+public interface EmployeeRepository extends PagingAndSortingRepository<Employee,Integer>, JpaRepository<Employee, Integer> {
+    public List<Employee> findByDepartmentName(String n);
 
-    public List<Employee> findBySalaryBetween(double min, double max);
+    public List<Employee> findByEmployeeNameAndDepartmentName(String name, String department);
 
-//    public List<Employee> findByNameAndDepartment(String name, String department);
+    public List<Employee> findByEmployeeNameContainingIgnoreCase(String keyword);
+    public List<Employee> findByEmployeeNameStartsWithIgnoreCase(String keyword);
 
-    public List<Employee> findByNameContaining(String keyword);
-
-    public Employee findByName(String name);
+    public Employee findByEmployeeNameIgnoreCase(String name);
 
     public List<Employee> findByJobTitle(String jobTitle);
+
 
 }
