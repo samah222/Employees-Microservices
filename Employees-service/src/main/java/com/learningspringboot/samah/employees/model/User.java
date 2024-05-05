@@ -2,6 +2,9 @@ package com.learningspringboot.samah.employees.model;
 
 import com.learningspringboot.samah.employees.Util.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,17 +18,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class User extends TrackingEntity{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(name = "username", unique = true)
-    private String username;
-
-    @Column(name = "password")
+    @NotBlank
+    @Size(min = 8)
     private String password;
+    @Email
+    @NotBlank
+    @Column(unique = true)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
@@ -34,7 +38,7 @@ public class User extends TrackingEntity{
     @OneToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-
+    private int tokens = 0;
     private boolean enabled = false;
 
 }

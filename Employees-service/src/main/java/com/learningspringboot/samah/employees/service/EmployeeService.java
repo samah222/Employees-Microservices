@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface EmployeeService {
     public List<Employee> getAllEmployees(int pageNumber, int pageSize);
+    public List<Employee> getAllEmployees();
 
     public Employee addEmployee(Employee employee);
 

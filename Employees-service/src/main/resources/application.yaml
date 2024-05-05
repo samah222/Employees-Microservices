@@ -1,5 +1,6 @@
 application:
   version: 0.1
+  server: localhost
 server:
   port: 8070
 logging:
@@ -11,6 +12,9 @@ spring:
     active: dev
 
 ---
+application:
+  version: 0.1
+  server: localhost
 
 spring:
   config:
@@ -49,6 +53,9 @@ rabbitmq:
     name: topicExchange1
 
 ---
+application:
+  version: 0.1
+  server: localhost
 
 spring:
   config:
@@ -85,6 +92,9 @@ rabbitmq:
   topic-exchange:
     name: topicExchange1
 ---
+application:
+  version: 0.1
+  server: localhost
 
 spring:
   config:

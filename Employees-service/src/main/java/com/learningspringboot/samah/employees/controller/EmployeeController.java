@@ -1,11 +1,9 @@
 package com.learningspringboot.samah.employees.controller;
 
 import com.learningspringboot.samah.employees.model.Employee;
-import com.learningspringboot.samah.employees.model.FullTimeEmployee;
-import com.learningspringboot.samah.employees.repository.EmployeeRepository;
-import com.learningspringboot.samah.employees.repository.FullTimeEmployeeRepository;
 import com.learningspringboot.samah.employees.service.EmployeeService;
 import com.learningspringboot.samah.employees.service.FullTimeEmployeeService;
+import com.learningspringboot.samah.employees.service.PartTimeEmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,18 +16,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-@Tag(name = "Employees APIs", description = "All Employees project APIs")
 
+@Tag(name = "Employees APIs", description = "All Employees project APIs")
 @RequestMapping("employee/v1")
 @RestController
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
     @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
     private FullTimeEmployeeService fullTimeEmployeeService;
-
+    @Autowired
+    private PartTimeEmployeeService partTimeEmployeeService;
 
     @Operation(summary = "Get pages for all employees ", description = "Get pages for all employees")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
@@ -43,7 +40,7 @@ public class EmployeeController {
     @GetMapping({"/allEmployees", "/" ,"/list"})
     public ModelAndView showEmployees(){
         ModelAndView modelAndView = new ModelAndView("list-employees");
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeService.getAllEmployees();
         modelAndView.addObject("employees",employees);
         return modelAndView;
     }
@@ -62,7 +59,7 @@ public class EmployeeController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute Employee employee){
-        employeeRepository.save(employee);
+        employeeService.addEmployee(employee);
         return "redirect:/list";
     }
 
@@ -71,7 +68,7 @@ public class EmployeeController {
     @GetMapping("/showUpdateForm")
     public ModelAndView showUpdateForm(@RequestParam int employeeId){
         ModelAndView modelAndView = new ModelAndView("add-employee-form");
-        Employee existingEmployee= employeeRepository.findById(employeeId).get();
+        Employee existingEmployee= employeeService.getEmployee(employeeId);
         modelAndView.addObject("employee",existingEmployee);
         return modelAndView;
     }
@@ -80,7 +77,7 @@ public class EmployeeController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
     @GetMapping("/deleteEmployee")
     public String deleteEmployeeFromList(@RequestParam int employeeId) {
-        employeeRepository.deleteById(employeeId);
+        employeeService.deleteEmployee(employeeId);
         return "redirect:/list";
     }
 

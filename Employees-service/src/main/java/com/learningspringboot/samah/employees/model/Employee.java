@@ -4,12 +4,9 @@ import com.learningspringboot.samah.employees.Util.EmployeeType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -27,11 +24,6 @@ public class Employee  extends TrackingEntity{
     @Column(name = "name", nullable = false )
     @NotBlank
     private String employeeName;
-
-    @Email
-    @NotBlank
-    @Column(unique = true)
-    private String email;
 
     //@Pattern(regexp ="^\\+[0-9]+$")
     @NotBlank

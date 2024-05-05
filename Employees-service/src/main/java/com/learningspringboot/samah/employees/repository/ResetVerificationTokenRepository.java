@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ResetVerificationTokenRepository extends JpaRepository<ResetVerificationToken, Long> {
     ResetVerificationToken findByToken(String token);
-    ResetVerificationToken findByUserId(Long id);
+    ResetVerificationToken findByUserId(Integer id);
 }

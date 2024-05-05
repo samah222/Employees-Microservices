@@ -18,7 +18,7 @@ import java.util.List;
 public class Project extends TrackingEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @Size(min = 2, max=30, message = "project name should be between 2 and 30 characters")
     @Column(name = "name", nullable = false )

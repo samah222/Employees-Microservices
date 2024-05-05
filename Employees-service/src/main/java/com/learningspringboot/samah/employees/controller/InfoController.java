@@ -1,27 +1,42 @@
 package com.learningspringboot.samah.employees.controller;
 
+import com.learningspringboot.samah.employees.service.impl.InfoServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Application Info APIs", description = "Application Info APIs")
-@RequestMapping("/info")
+@Tag(name = "Application Info", description = "The general info of this application")
 @RestController
+@RequestMapping("/v1")
 public class InfoController {
-    @Value("${spring.application.name}")
-    private String name;
-    @Value("${application.version}")
-    private String version;
+    @Autowired
+    private InfoServiceImpl infoService;
 
-    @Operation(summary = "Get all application info", description = "Get all application info")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200")})
-    @GetMapping
-    public String getInfo(){
-        return "This application is "+name+" and this version: "+version;
+    @Operation(
+            summary = "Fetch general app info ",
+            description = "fetches all general application info, e.g. application name and version")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation")
+            //,ref = "This application is user-service and this version: v1")
+    })
+    @GetMapping("/info")
+    public String getInfo() {
+        return infoService.getAppNameAndVersion();
+    }
+
+    @Operation(
+            summary = "Fetch Java version",
+            description = "Fetch the Java version and other environment variables")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successful operation")
+    })
+    @GetMapping("/java-version")
+    public String getJavaVersion() {
+        return infoService.getJavaVersion();
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+    User findByEmail(String em);
     @Modifying
     @Transactional
     @Query("update User u set u.enabled = :en")
     public void updateAllEnabled(boolean en);
-
 }
