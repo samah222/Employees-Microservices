@@ -1,17 +1,16 @@
 package com.learningspringboot.samah.employees.service;
 
 import com.learningspringboot.samah.employees.dto.*;
-import com.learningspringboot.samah.employees.model.User;
-import org.springframework.cache.annotation.Cacheable;
+import com.learningspringboot.samah.employees.model.MyUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface UserService {
-     User getUser(int id);
+     MyUser getUser(int id);
 
-    List<User> getUserAllUsers();
+    List<MyUser> getUserAllUsers();
 
     UserDto addNewUser(UserRegistrationDto userRegistrationDto);
     public CustomResponse validateVerificationToken(String token);

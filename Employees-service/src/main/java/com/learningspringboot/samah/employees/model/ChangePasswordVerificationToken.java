@@ -23,12 +23,12 @@ public class ChangePasswordVerificationToken {
     @JoinColumn(name = "user_id",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_CHANGE_PASSWORD_VERIFY_TOKEN"))
-    private User user;
+    private MyUser myUser;
 
-    public ChangePasswordVerificationToken(User user, String token) {
+    public ChangePasswordVerificationToken(MyUser myUser, String token) {
         super();
         this.token = token;
-        this.user = user;
+        this.myUser = myUser;
         this.expirationTime = TokenExpirationTime.calculateExpirationDate();
     }
 

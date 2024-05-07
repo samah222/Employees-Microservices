@@ -22,7 +22,7 @@ public class InfoController {
             description = "fetches all general application info, e.g. application name and version")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation")
-            //,ref = "This application is user-service and this version: v1")
+            //,ref = "This application is myUser-service and this version: v1")
     })
     @GetMapping("/info")
     public String getInfo() {

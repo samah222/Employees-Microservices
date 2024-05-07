@@ -23,12 +23,12 @@ public class ResetVerificationToken {
     @JoinColumn(name = "user_id",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESET_USER_VERIFY_TOKEN"))
-    private User user;
+    private MyUser myUser;
 
-    public ResetVerificationToken(User user, String token) {
+    public ResetVerificationToken(MyUser myUser, String token) {
         super();
         this.token = token;
-        this.user = user;
+        this.myUser = myUser;
         this.expirationTime = TokenExpirationTime.calculateExpirationDate();
     }
 

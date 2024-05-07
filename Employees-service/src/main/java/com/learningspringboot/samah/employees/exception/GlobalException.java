@@ -5,6 +5,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalException {
@@ -55,6 +56,11 @@ public class GlobalException {
     @ExceptionHandler(UserNotActivatedException.class)
     public ProblemDetail handleUserNotActivatedException(UserNotActivatedException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), ex.getMessage());
+    } //
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ProblemDetail handleNoResourceFoundException(NoResourceFoundException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), ex.getMessage());
     }
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleException(Exception ex) {

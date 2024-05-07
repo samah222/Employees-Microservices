@@ -1,7 +1,6 @@
 package com.learningspringboot.samah.employees.controller;
 
 import com.learningspringboot.samah.employees.dto.*;
-import com.learningspringboot.samah.employees.model.User;
 import com.learningspringboot.samah.employees.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,22 +24,21 @@ public class UserController {
     }
     private UserService userService;
 
-    @Operation(summary = "Register user", description = "Register user")
+    @Operation(summary = "Register User", description = "Register User")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
     @PostMapping("/register")
     public ResponseEntity<UserDto> AddNewUser(@RequestBody @Validated UserRegistrationDto userRegistrationDto){
-        System.out.println("start controller: addNewUser ");
         return new ResponseEntity<>(userService.addNewUser(userRegistrationDto), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Verify token", description = "Verify the token for a new registered user")
+    @Operation(summary = "Verify token", description = "Verify the token for a new registered User")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
     @GetMapping("/verifyRegistration")
     public ResponseEntity<CustomResponse> verifyUserRegistration(@RequestParam("token") String token) {
         return new ResponseEntity<>(userService.validateVerificationToken(token), HttpStatus.OK);
     }
 
-    @Operation(summary = "Send a new token", description = "Send a new token for a new registered user, due to delay or error")
+    @Operation(summary = "Send a new token", description = "Send a new token for a new registered User, due to delay or error")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201")})
     @GetMapping("/resendVerificationToken")
@@ -78,10 +76,10 @@ public class UserController {
         return new ResponseEntity<CustomResponse>(userService.resetPassword(resetPasswordDto), HttpStatus.OK);
     }
 
-    @Operation(summary = "Get a user", description = "Get a user")
+    @Operation(summary = "Get a User", description = "Get a User")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation")})
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUser(@Parameter(description = "ID of user to be retrieved",
+    public ResponseEntity<UserDto> getUser(@Parameter(description = "ID of User to be retrieved",
             required = true) @PathVariable Integer id) {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
@@ -93,22 +91,22 @@ public class UserController {
         return new ResponseEntity<List<UserDto>>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete a user", description = "Delete a user")
+    @Operation(summary = "Delete a User", description = "Delete a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@Parameter(description = "ID of user to be updated",
+    public ResponseEntity deleteUser(@Parameter(description = "ID of User to be updated",
             required = true) @PathVariable int id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @Operation(summary = "Edit a user", description = "Edit a user")
+    @Operation(summary = "Edit a User", description = "Edit a User")
     @ApiResponses(value = { @ApiResponse(responseCode = "200") })
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@Validated @RequestBody UserDto userDto,
-                                              @Parameter(description = "ID of user to be updated",
+                                              @Parameter(description = "ID of User to be updated",
                                                       required = true) @PathVariable int id) {
         userService.updateUser(id, userDto);
         return new ResponseEntity<>(userService.updateUser(id, userDto), HttpStatus.OK);

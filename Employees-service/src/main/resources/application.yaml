@@ -11,6 +11,7 @@ spring:
   profiles:
     active: dev
 
+
 ---
 application:
   version: 0.1

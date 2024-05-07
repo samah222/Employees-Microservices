@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChangePasswordVerificationTokenRepository extends JpaRepository<ChangePasswordVerificationToken, Long> {
     ChangePasswordVerificationToken findByToken(String token);
-    ChangePasswordVerificationToken findByUserId(Long id);
+    ChangePasswordVerificationToken findByMyUserId(Long id);
 }

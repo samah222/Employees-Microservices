@@ -13,7 +13,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:3.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:3.2.5" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:6.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.22" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:3.2.5" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:5.0.1" level="project" />
@@ -125,6 +124,13 @@
     <orderEntry type="library" name="Maven: org.springframework.amqp:spring-amqp:3.1.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.retry:spring-retry:2.0.5" level="project" />
     <orderEntry type="library" name="Maven: com.rabbitmq:amqp-client:5.19.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:3.2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:6.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:6.2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:6.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework.security:spring-security-test:6.2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:6.2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:6.2.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.amqp:spring-rabbit-test:3.1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.amqp:spring-rabbit-junit:3.1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-library:2.2" level="project" />

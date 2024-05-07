@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(Employee employee) {
-        producer.sendJsonMessage(new Mail(employee.getUser().getEmail(),"Welcome "+employee.getEmployeeName(),
+        producer.sendJsonMessage(new Mail(employee.getMyUser().getEmail(),"Welcome "+employee.getEmployeeName(),
                 "Welcome to our company !!"));
         return empRepo.save(employee);
     }

@@ -4,7 +4,7 @@ import com.learningspringboot.samah.employees.Util.*;
 import com.learningspringboot.samah.employees.dto.*;
 import com.learningspringboot.samah.employees.exception.*;
 import com.learningspringboot.samah.employees.mapping.UserMapper;
-import com.learningspringboot.samah.employees.model.User;
+import com.learningspringboot.samah.employees.model.MyUser;
 import com.learningspringboot.samah.employees.model.VerificationToken;
 import com.learningspringboot.samah.employees.model.ChangePasswordVerificationToken;
 import com.learningspringboot.samah.employees.model.ResetVerificationToken;
@@ -36,12 +36,12 @@ public class UserImpl implements UserService {
     @Autowired
     private InfoServiceImpl infoService;
     @Override
-    public User getUser(int id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("user not found"));
+    public MyUser getUser(int id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("myUser not found"));
     }
 
     @Override
-    public List<User> getUserAllUsers() {
+    public List<MyUser> getUserAllUsers() {
         return userRepository.findAll();
     }
 
@@ -64,18 +64,18 @@ public class UserImpl implements UserService {
         System.out.println("after get role ");
         if(!EmailValidation.isValidEmail(userRegistrationDto.getEmail()))
             throw new InvalidUserDataException("Invalid email syntax");
-        User user = UserMapper.UserRegistrationDtoToUser(userRegistrationDto);
-        user.setRole(user.getRole()==null? UserRole.EMPLOYEE:user.getRole());
-        user.setTokens(user.getTokens()+1);
-        User savedUser = userRepository.save(user);
+        MyUser myUser = UserMapper.UserRegistrationDtoToUser(userRegistrationDto);
+        myUser.setRole(myUser.getRole()==null? UserRole.EMPLOYEE: myUser.getRole());
+        myUser.setTokens(myUser.getTokens()+1);
+        MyUser savedMyUser = userRepository.save(myUser);
         String token = UUID.randomUUID().toString();
         String url = "http://" + infoService.getApplicationServer() + ":" + infoService.getServerPort()
                 + "/v1/users/verifyRegistration?token=" + token;
-        saveVerificationToken(savedUser, token);
-        producer.sendJsonMessage(new Mail(user.getEmail(),"Registration token for ABC Company",
+        saveVerificationToken(savedMyUser, token);
+        producer.sendJsonMessage(new Mail(myUser.getEmail(),"Registration token for ABC Company",
                 "Welcome to our company !! please click in the following token to complete the registration: "+url));
 
-        return UserMapper.UserToUserDto(savedUser);
+        return UserMapper.UserToUserDto(savedMyUser);
     }
 
     @Override
@@ -84,10 +84,10 @@ public class UserImpl implements UserService {
         if (verificationToken == null)
             return new CustomResponse(UserUtils.REGISTRATION_TOKEN_NOT_FOUND, "REGISTRATION_TOKEN_NOT_FOUND");
         else {
-            User user = verificationToken.getUser();
+            MyUser myUser = verificationToken.getMyUser();
             if (TokenExpirationTime.calculateDifferenceTime(verificationToken.getExpirationTime(), LocalDateTime.now()) == 1) {
-                user.setEnabled(true);
-                userRepository.save(user);
+                myUser.setEnabled(true);
+                userRepository.save(myUser);
                 return new CustomResponse(UserUtils.SUCCESSFUL, "SUCCESSFUL");
             } else {
                 verificationTokenRepository.deleteById(verificationToken.getId());
@@ -98,35 +98,35 @@ public class UserImpl implements UserService {
 
     @Override
     public UserDto updateUser(Integer id, UserDto dto) {
-        User dbUser = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Email not found"));
-        if(!dbUser.isEnabled())
-            throw new UserNotActivatedException("User not activated");
+        MyUser dbMyUser = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Email not found"));
+        if(!dbMyUser.isEnabled())
+            throw new UserNotActivatedException("MyUser not activated");
         Optional.ofNullable(dto.getEmail()).ifPresent(data -> {
             if(EmailValidation.isValidEmail(data))
-                dbUser.setEmail(dto.getEmail());
+                dbMyUser.setEmail(dto.getEmail());
             else throw new InvalidUserDataException("Email syntax is invalid");
         });
         Optional.ofNullable(dto.getRole()).ifPresent(data -> {
             if(Arrays.stream(UserRole.values()).anyMatch((t) -> t == dto.getRole()))
-                dbUser.setRole(dto.getRole());
+                dbMyUser.setRole(dto.getRole());
             else throw new InvalidUserDataException("Role not invalid");
         });
-        userRepository.save(dbUser);
-        return UserMapper.UserToUserDto(dbUser);
+        userRepository.save(dbMyUser);
+        return UserMapper.UserToUserDto(dbMyUser);
     }
 
     @Override
     public CustomResponse resendVerificationToken(String email) {
-        User user = userRepository.findByEmail(email);
-        if(user==null)
-            throw new UserNotFoundException("User not found");
-        if (user.getTokens() == UserUtils.MAX_NO_OF_TOKENS)
+        MyUser myUser = userRepository.findByEmail(email);
+        if(myUser ==null)
+            throw new UserNotFoundException("MyUser not found");
+        if (myUser.getTokens() == UserUtils.MAX_NO_OF_TOKENS)
             return new CustomResponse(UserUtils.Max_NUMBER_OF_TOKENS, "Max_NUMBER_OF_TOKENS");
-        VerificationToken verificationToken = verificationTokenRepository.findByUserId(user.getId());
+        VerificationToken verificationToken = verificationTokenRepository.findByMyUserId(myUser.getId());
         if(verificationToken != null)
             verificationTokenRepository.deleteById(verificationToken.getId());
         String token = UUID.randomUUID().toString();
-        saveVerificationToken(user, token);
+        saveVerificationToken(myUser, token);
         String url = "http://" + infoService.getApplicationServer() + ":" + infoService.getServerPort()
                 + "/v1/users/newToken?token=" + token;
         producer.sendJsonMessage(new Mail(email,"BookStore Registration Resend Token",
@@ -147,14 +147,14 @@ public class UserImpl implements UserService {
         if(!PasswordValidator.isPasswordStrong(changePasswordDto.getNewPassword()))
             throw new WeakPasswordException("Password should be at least 8 characters, one Capital, number and" +
                     " a special character");
-        User user = userRepository.findByEmail(changePasswordDto.getEmail());
-        if( user == null)
-                throw new UserNotFoundException("User not exist");
-        if (!user.getPassword().equals(changePasswordDto.getOldPassword())) {
+        MyUser myUser = userRepository.findByEmail(changePasswordDto.getEmail());
+        if( myUser == null)
+                throw new UserNotFoundException("MyUser not exist");
+        if (!myUser.getPassword().equals(changePasswordDto.getOldPassword())) {
             return new CustomResponse(UserUtils.OLD_PASSWORD_NOT_MATCHING_WITH_DB, "OLD_PASSWORD_NOT_MATCHING");
         } else {
-            user.setPassword(changePasswordDto.getNewPassword());
-            userRepository.save(user);
+            myUser.setPassword(changePasswordDto.getNewPassword());
+            userRepository.save(myUser);
         }
         return new CustomResponse(0, "SUCCESSFUL");
     }
@@ -165,20 +165,20 @@ public class UserImpl implements UserService {
         if (requestResetPasswordDto == null
                 || requestResetPasswordDto.getEmail() == null)
             throw new NullPointerException("Reset password data can not be null");
-        User user = userRepository.findByEmail(requestResetPasswordDto.getEmail());
-        if(user ==null)
-               throw new UserNotFoundException("User not found");
-        ResetVerificationToken resetToken = resetVerificationTokenRepository.findByUserId(user.getId());
+        MyUser myUser = userRepository.findByEmail(requestResetPasswordDto.getEmail());
+        if(myUser ==null)
+               throw new UserNotFoundException("MyUser not found");
+        ResetVerificationToken resetToken = resetVerificationTokenRepository.findByMyUserId(myUser.getId());
         if (resetToken != null)
             token = resetToken.getToken();
         else {
             token = UUID.randomUUID().toString();
         }
-        saveResetVerificationToken(user, token);
+        saveResetVerificationToken(myUser, token);
         // send email
         String url = "http://" + infoService.getApplicationServer() + ":" + infoService.getServerPort()
                 + "/v1/users/resetPassword?token=" + token;
-        producer.sendJsonMessage(new Mail(user.getEmail(), "BookStore- Token for Request Reset Password"
+        producer.sendJsonMessage(new Mail(myUser.getEmail(), "BookStore- Token for Request Reset Password"
                 , " Please click on this url to reset your password : " + url));
         return new CustomResponse(UserUtils.SUCCESSFUL, "Email Sent");
     }
@@ -193,39 +193,39 @@ public class UserImpl implements UserService {
             throw new NullPointerException("Reset password data can not be null");
         if (!resetPasswordDto.getPassword().equals(resetPasswordDto.getMatchingPassword()))
             throw new InvalidUserDataException("Passwords not matched");
-        User user = userRepository.findByEmail(resetPasswordDto.getEmail());
-        if(user==null)
-                throw new UserNotFoundException("User email not found");
-        ResetVerificationToken resetVerificationToken = resetVerificationTokenRepository.findByUserId(user.getId());
+        MyUser myUser = userRepository.findByEmail(resetPasswordDto.getEmail());
+        if(myUser ==null)
+                throw new UserNotFoundException("MyUser email not found");
+        ResetVerificationToken resetVerificationToken = resetVerificationTokenRepository.findByMyUserId(myUser.getId());
         if (resetVerificationToken == null)
             return new CustomResponse(UserUtils.RESET_TOKEN_NOT_FOUND, "RESET_TOKEN_NOT_FOUND");
         if (!resetVerificationToken.getToken().equals(resetPasswordDto.getToken()))
             return new CustomResponse(UserUtils.RESET_TOKEN_NOT_MATCHED, "RESET_TOKEN_NOT_MATCHED");
         if (TokenExpirationTime.calculateDifferenceTime(resetVerificationToken.getExpirationTime(), LocalDateTime.now()) != 1)
             return new CustomResponse(UserUtils.RESET_TOKEN_EXPIRED, "RESET_TOKEN_EXPIRED");
-        user.setPassword(resetPasswordDto.getPassword());
-        userRepository.save(user);
+        myUser.setPassword(resetPasswordDto.getPassword());
+        userRepository.save(myUser);
         return new CustomResponse(0, "SUCCESSFUL");
     }
 
     @Override
     public void deleteUserById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("user not found"));
-        user.setEnabled(false);
-        userRepository.save(user);
+        MyUser myUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("myUser not found"));
+        myUser.setEnabled(false);
+        userRepository.save(myUser);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(u -> UserMapper.UserToUserDto(u)).toList();
+        List<MyUser> myUsers = userRepository.findAll();
+        return myUsers.stream().map(u -> UserMapper.UserToUserDto(u)).toList();
     }
 
     @Override
     @Cacheable(value = "userById", key = "#id")
     public UserDto getUserById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
-        return UserMapper.UserToUserDto(user);
+        MyUser myUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("MyUser not found"));
+        return UserMapper.UserToUserDto(myUser);
     }
 
     public void saveVerificationTokenForUSer(UserDto dto, String token) {
@@ -233,18 +233,18 @@ public class UserImpl implements UserService {
         verificationTokenRepository.save(verificationToken);
     }
 
-    public void saveVerificationToken(User user, String token) {
-        VerificationToken verificationToken = new VerificationToken(user, token);
+    public void saveVerificationToken(MyUser myUser, String token) {
+        VerificationToken verificationToken = new VerificationToken(myUser, token);
         verificationTokenRepository.save(verificationToken);
     }
 
-    public void saveChangePasswordVerificationToken(User user, String token) {
-        ChangePasswordVerificationToken changeToken = new ChangePasswordVerificationToken(user, token);
+    public void saveChangePasswordVerificationToken(MyUser myUser, String token) {
+        ChangePasswordVerificationToken changeToken = new ChangePasswordVerificationToken(myUser, token);
         changePasswordVerificationTokenRepository.save(changeToken);
     }
 
-    public void saveResetVerificationToken(User user, String token) {
-        ResetVerificationToken resetToken = new ResetVerificationToken(user, token);
+    public void saveResetVerificationToken(MyUser myUser, String token) {
+        ResetVerificationToken resetToken = new ResetVerificationToken(myUser, token);
         resetVerificationTokenRepository.save(resetToken);
     }
     public static boolean findUserRole(String userRole) {

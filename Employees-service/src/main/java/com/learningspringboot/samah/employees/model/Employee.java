@@ -56,7 +56,7 @@ public class Employee  extends TrackingEntity{
     private List<Project> projects;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
-    private User user;
+    private MyUser myUser;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "employee_type")

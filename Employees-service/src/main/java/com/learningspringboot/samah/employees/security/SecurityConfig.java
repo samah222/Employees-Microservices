@@ -4,7 +4,7 @@
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 ////import org.springframework.security.config.authentication.PasswordEncoderParser;
 //import org.springframework.security.config.authentication.PasswordEncoderParser;
-//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.MyUser;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -14,17 +14,17 @@
 //
 //    @Bean
 //    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("user")
+//        UserDetails myUser = MyUser.builder()
+//                .username("myUser")
 //                .password(passwordEncoder().encode("password"))
 //                .roles("USER")
 //                .build();
-//        UserDetails admin = User.builder()
+//        UserDetails admin = MyUser.builder()
 //                .username("admin")
 //                .password(passwordEncoder().encode("password"))
 //                .roles("USER", "ADMIN")
 //                .build();
-//        return new InMemoryUserDetailsManager(user, admin);
+//        return new InMemoryUserDetailsManager(myUser, admin);
 //    }
 //
 //    @Bean

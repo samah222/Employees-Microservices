@@ -23,12 +23,12 @@ public class VerificationToken {
     @JoinColumn(name = "user_id",
             nullable = false,
             foreignKey = @ForeignKey(name = "FK_USER_VERIFY_TOKEN"))
-    private User user;
+    private MyUser myUser;
 
-    public VerificationToken(User user, String token) {
+    public VerificationToken(MyUser myUser, String token) {
         super();
         this.token = token;
-        this.user = user;
+        this.myUser = myUser;
         this.expirationTime = TokenExpirationTime.calculateExpirationDate();
     }
 

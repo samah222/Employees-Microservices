@@ -2,11 +2,11 @@ package com.learningspringboot.samah.employees.mapping;
 
 import com.learningspringboot.samah.employees.dto.UserDto;
 import com.learningspringboot.samah.employees.dto.UserRegistrationDto;
-import com.learningspringboot.samah.employees.model.User;
+import com.learningspringboot.samah.employees.model.MyUser;
 
 public class UserMapper {
-public static User UserDtoToUser(UserDto dto){
-    return User.builder()
+public static MyUser UserDtoToUser(UserDto dto){
+    return MyUser.builder()
             .id(dto.getUserId())
             .role(dto.getRole())
             .email(dto.getEmail())
@@ -14,20 +14,20 @@ public static User UserDtoToUser(UserDto dto){
             .build();
 }
 
-public static UserDto UserToUserDto(User user){
+public static UserDto UserToUserDto(MyUser myUser){
     return UserDto.builder().
-            userId(user.getId())
-            .role(user.getRole())
-            .employee(user.getEmployee())
-            .email(user.getEmail())
+            userId(myUser.getId())
+            .role(myUser.getRole())
+            .employee(myUser.getEmployee())
+            .email(myUser.getEmail())
             .build();
 }
 
-    public static User UserRegistrationDtoToUser(UserRegistrationDto registrationDto) {
+    public static MyUser UserRegistrationDtoToUser(UserRegistrationDto registrationDto) {
         if (registrationDto == null) {
-            throw new NullPointerException("The User Registration DTO should not be null");
+            throw new NullPointerException("The MyUser Registration DTO should not be null");
         }
-        return User.builder()
+        return MyUser.builder()
                 .email(registrationDto.getEmail())
                 .role(registrationDto.getRole())
                 .password(registrationDto.getPassword())
