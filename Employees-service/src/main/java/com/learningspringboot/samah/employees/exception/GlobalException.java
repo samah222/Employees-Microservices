@@ -18,8 +18,8 @@ public class GlobalException {
     public ProblemDetail handleInvalidRoleException(InvalidRoleException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), ex.getMessage());
     }
-    @ExceptionHandler(InvalidUserDataException.class)
-    public ProblemDetail handleInvalidUserDataException(InvalidUserDataException ex) {
+    @ExceptionHandler(InvalidDataException.class)
+    public ProblemDetail handleInvalidDataException(InvalidDataException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), ex.getMessage());
     }
 

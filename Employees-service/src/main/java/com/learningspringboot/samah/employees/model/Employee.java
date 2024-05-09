@@ -25,7 +25,6 @@ public class Employee  extends TrackingEntity{
     @NotBlank
     private String employeeName;
 
-    //@Pattern(regexp ="^\\+[0-9]+$")
     @NotBlank
     @Size(min = 9, max=16)
     private String phone;
@@ -58,6 +57,7 @@ public class Employee  extends TrackingEntity{
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     private MyUser myUser;
 
+    @NotNull(message = "Employee type must be specified, FULL_TIME or PART_TIME")
     @Enumerated(EnumType.STRING)
     @Column(name = "employee_type")
     private EmployeeType employeeType ;

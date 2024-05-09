@@ -1,7 +1,6 @@
 package com.learningspringboot.samah.employees.service;
 
 import com.learningspringboot.samah.employees.dto.ProjectDto;
-import com.learningspringboot.samah.employees.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +15,5 @@ public interface ProjectService {
 
     ProjectDto updateProject(Integer id, ProjectDto projectDto);
 
-    void deleteProjectById(Integer id);
+    void deleteProject(Integer id);
 }

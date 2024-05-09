@@ -1,11 +1,12 @@
 package com.learningspringboot.samah.employees.service;
 
+import com.learningspringboot.samah.employees.dto.EmployeeDto;
 import com.learningspringboot.samah.employees.model.Employee;
 
 import java.util.List;
 
 public interface EmployeeService {
-    public List<Employee> getAllEmployees(int pageNumber, int pageSize);
+    public List<EmployeeDto> getAllEmployees(int pageNumber, int pageSize);
     public List<Employee> getAllEmployees();
 
     public Employee addEmployee(Employee employee);

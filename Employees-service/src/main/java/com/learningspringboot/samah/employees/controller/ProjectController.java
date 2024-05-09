@@ -1,13 +1,11 @@
 package com.learningspringboot.samah.employees.controller;
 
+import com.learningspringboot.samah.employees.dto.ProjectDto;
 import com.learningspringboot.samah.employees.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.learningspringboot.samah.employees.dto.ProjectDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +16,12 @@ import java.util.List;
 @RequestMapping("project/v1")
 @RestController
 public class ProjectController {
+    private ProjectService projectService;
+
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
-    private ProjectService projectService;
+
     @Operation(summary = "Add Project", description = "Add Project")
     @ApiResponses(value = {@ApiResponse(responseCode = "201")})
     @PostMapping
@@ -58,7 +58,7 @@ public class ProjectController {
     @ApiResponses(value = {@ApiResponse(responseCode = "204")})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable Integer id) {
-        projectService.deleteProjectById(id);
+        projectService.deleteProject(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

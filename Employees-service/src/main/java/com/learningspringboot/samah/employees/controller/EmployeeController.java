@@ -1,5 +1,6 @@
 package com.learningspringboot.samah.employees.controller;
 
+import com.learningspringboot.samah.employees.dto.EmployeeDto;
 import com.learningspringboot.samah.employees.model.Employee;
 import com.learningspringboot.samah.employees.service.EmployeeService;
 import com.learningspringboot.samah.employees.service.FullTimeEmployeeService;
@@ -31,8 +32,8 @@ public class EmployeeController {
     @Operation(summary = "Get pages for all employees ", description = "Get pages for all employees")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam int pageNumber, @RequestParam int pageSize){
-        return new ResponseEntity<List<Employee>>(employeeService.getAllEmployees(pageNumber, pageSize), HttpStatus.OK) ;
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(@RequestParam int pageNumber, @RequestParam int pageSize){
+        return new ResponseEntity<List<EmployeeDto>>(employeeService.getAllEmployees(pageNumber, pageSize), HttpStatus.OK) ;
     }
 
     @Operation(summary = "Get all employees ", description = "Get all employees")

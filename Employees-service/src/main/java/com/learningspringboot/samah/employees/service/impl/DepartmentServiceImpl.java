@@ -1,5 +1,6 @@
 package com.learningspringboot.samah.employees.service.impl;
 
+import com.learningspringboot.samah.employees.exception.InvalidDataException;
 import com.learningspringboot.samah.employees.model.Department;
 import com.learningspringboot.samah.employees.repository.DepartmentRepository;
 import com.learningspringboot.samah.employees.service.DepartmentService;
@@ -14,6 +15,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentServiceImpl(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }
+
     @Override
     public Department getDepartmentById(Integer id) {
         return departmentRepository.findById(id)
@@ -27,6 +29,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department addDepartment(Department department) {
+        if (department.getName() == null || department.getName().isBlank()) {
+            throw new InvalidDataException("Department name cannot be empty");
+        }
+        if (department.getName().length() < 2 || department.getName().length() > 50) {
+            throw new InvalidDataException("Department name should be between 2 and 50 characters");
+        }
         return departmentRepository.save(department);
     }
 

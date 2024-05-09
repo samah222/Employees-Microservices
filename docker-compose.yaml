@@ -1,0 +1,65 @@
+version: "3.8"
+services:
+  employees-service-db:
+    image: mysql:8.4
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./mysql-dump:/docker-entrypoint-initdb.d
+    networks:
+      - employees-network
+
+  employees-service:
+    image: employees/employees-service:latest
+    ports:
+      - "8070:8070"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    depends_on:
+      - employees-service-db
+    networks:
+      - employees-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - employees-network
+
+  mail-service:
+    image: bookstore/mail-service:latest
+    ports:
+      - "8885:8885"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - employees-network
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - '9411:9411'
+    networks:
+      - employees-network

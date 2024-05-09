@@ -1,4 +1,5 @@
 # Employees APIs
+
 Employees management project using Spring Boot
 
 ## Table of Contents
@@ -12,14 +13,18 @@ Employees management project using Spring Boot
 
 ## Project Overview
 
-In this project, we intend to create a basic employee management system using spring boot, MySQL and Thymeleaf templates.
+In this project, we intend to create a basic employee management system using spring boot, MySQL and Thymeleaf
+templates.
 Alongside, with mail-service that consume the published mails from RabbitMQ.
+
 ## Getting Started
 
 ### Prerequisites
+
 The project using Spring boot 3 and Java 17
 
 ### Running the application
+
 To run the application (using terminal) with development profile:
 
     mvn clean install 
@@ -28,15 +33,16 @@ To run the application (using terminal) with development profile:
 
 ## Project Technologies
 
-1. Spring Boot (Spring web, Spring Validation, Spring JPA)
-2. MySQL 
+1. Spring Boot (Spring web, Spring Validation, Spring JPA, Spring Security)
+2. MySQL
 3. RabbitMQ
-4. JavaMailSender 
-5. Thymeleaf 
-6. OpenAPI for documentation 
-7. Lombok 
+4. JavaMailSender
+5. Thymeleaf
+6. OpenAPI for documentation
+7. Lombok
 8. Docker and Docker-compose
-
+9. Zipkin
 
 ## Project APIs
+
 ![screenshot](employees.png)

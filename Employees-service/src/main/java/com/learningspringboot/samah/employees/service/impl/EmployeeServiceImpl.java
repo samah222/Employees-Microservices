@@ -1,7 +1,11 @@
 package com.learningspringboot.samah.employees.service.impl;
 
+import com.learningspringboot.samah.employees.Util.EmployeeType;
+import com.learningspringboot.samah.employees.dto.EmployeeDto;
 import com.learningspringboot.samah.employees.dto.Mail;
 import com.learningspringboot.samah.employees.exception.EmployeeNotFoundException;
+import com.learningspringboot.samah.employees.exception.InvalidDataException;
+import com.learningspringboot.samah.employees.mapping.EmployeeMapper;
 import com.learningspringboot.samah.employees.model.Employee;
 import com.learningspringboot.samah.employees.publisher.RabbitmqMailProducer;
 import com.learningspringboot.samah.employees.repository.EmployeeRepository;
@@ -11,78 +15,110 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.EnumSet;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
-    private EmployeeRepository empRepo;
+    private EmployeeRepository employeeRepository;
     @Autowired
     private RabbitmqMailProducer producer;
     
     @Override
-    public List<Employee> getAllEmployees(int pageNumber, int pageSize) {
+    public List<EmployeeDto> getAllEmployees(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return empRepo.findAll(pageable).getContent();
+        return employeeRepository.findAll(pageable)
+                .getContent().stream()
+                .map(EmployeeMapper::employeeToEmployeeDto).toList();
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-        return empRepo.findAll();
+        return employeeRepository.findAll();
     }
 
     @Override
     public Employee addEmployee(Employee employee) {
+        if (employee.getEmployeeName() == null
+                || employee.getEmployeeName().isEmpty()
+                || employee.getPhone() == null
+                || employee.getPhone().isEmpty()
+                || employee.getEmployeeType() == null
+                || employee.getEmployeeType().toString().isEmpty()){
+            throw new InvalidDataException("Employee data cannot be empty");
+        }
+        if ((employee.getEmployeeName().length() < 2 || (employee.getEmployeeName().length() > 50) )){
+            throw new InvalidDataException("Employee name should be between 2 and 50 characters");
+        }
+        if(employee.getPhone().length()< 9 || employee.getPhone().length()> 16){
+            throw new InvalidDataException("Employee phone should be between 9 and 16 numbers");
+        }
+        if(!EnumSet.allOf(EmployeeType.class).contains(employee.getEmployeeType()))
+            throw new InvalidDataException("Invalid employee type");
         producer.sendJsonMessage(new Mail(employee.getMyUser().getEmail(),"Welcome "+employee.getEmployeeName(),
                 "Welcome to our company !!"));
-        return empRepo.save(employee);
+        return employeeRepository.save(employee);
     }
 
     @Override
     public Employee editEmployee(Employee employee) {
-        if(!empRepo.findById(employee.getId()).isPresent())
-            throw new EmployeeNotFoundException("Employee not found");
-        return empRepo.save(employee);
+
+        Employee dbEmployee = employeeRepository.findById(employee.getId())
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+        Optional.ofNullable(employee.getEmployeeName()).ifPresent(data -> {
+            if(employee.getEmployeeName().isEmpty())
+             throw new InvalidDataException("Employee name can not be empty");
+            if ((employee.getEmployeeName().length() < 2 || (employee.getEmployeeName().length() > 50) ))
+                throw new InvalidDataException("Employee name should be between 2 and 50 characters");
+            dbEmployee.setEmployeeName(employee.getEmployeeName());
+        });
+        Optional.ofNullable(employee.getEmployeeType()).ifPresent(data -> {
+            if(employee.getEmployeeType().toString().isEmpty())
+             throw new InvalidDataException("Employee type can not be empty");
+            if(!EnumSet.allOf(EmployeeType.class).contains(employee.getEmployeeType()))
+                throw new InvalidDataException("Invalid employee type");
+            dbEmployee.setEmployeeType(employee.getEmployeeType());
+        });
+
+
+        return employeeRepository.save(dbEmployee);
     }
 
     @Override
     public Employee getEmployee(int id) {
-        return empRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
-//        return employee
-//        if (employee.isPresent())
-//            return employee.get();
-//        throw new RuntimeException("This employee is not present");
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
     }
 
     @Override
     public void deleteEmployee(int Id) {
-        empRepo.deleteById(Id);
+        employeeRepository.deleteById(Id);
     }
 
     @Override
     public List<Employee> getEmployeesByDepartment(String n) {
-        return empRepo.findByDepartmentName(n);
+        return employeeRepository.findByDepartmentName(n);
     }
 
     @Override
     public List<Employee> getEmployeesByNameAndDepartmentName(String name, String department) {
-        return empRepo.findByEmployeeNameAndDepartmentName(name, department);
+        return employeeRepository.findByEmployeeNameAndDepartmentName(name, department);
     }
 
     @Override
     public List<Employee> getEmployeesByNameContaining(String keyword) {
-        return empRepo.findByEmployeeNameContainingIgnoreCase(keyword);
+        return employeeRepository.findByEmployeeNameContainingIgnoreCase(keyword);
     }
 
     @Override
     public Employee getEmployeesByName(String name) {
-        return empRepo.findByEmployeeNameIgnoreCase(name);
+        return employeeRepository.findByEmployeeNameIgnoreCase(name);
     }
 
     @Override
     public List<Employee> getEmployeesByJobTitle(String jobTitle) {
-        return empRepo.findByJobTitle(jobTitle);
+        return employeeRepository.findByJobTitle(jobTitle);
     }
 //    public double calculateTotalSalaryForAllEmployees() {
 //        List<Employee> allEmployees = empRepo.findAll();
