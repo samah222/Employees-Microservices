@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tag(name = "Projects APIs", description = "All Projects APIs")
-@RequestMapping("project/v1")
+@RequestMapping("v1/project")
 @RestController
 public class ProjectController {
     private ProjectService projectService;

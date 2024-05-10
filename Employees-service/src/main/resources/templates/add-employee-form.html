@@ -1,11 +1,12 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, myUser-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, myUser-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Add Employees</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" rel="stylesheet">
 
 </head>
 <body>
@@ -14,15 +15,16 @@
         Add Employees
     </h2>
     <hr/>
-    <form th:action="@{/saveEmployee}" th:object="${employee}" method="POST">
-        <input type="text" th:field="*{name}" placeholder="Enter your name" class="form-control col-4 mb-4" />
-        <input type="text" th:field="*{email}" placeholder="Enter your email" class="form-control col-4 mb-4" />
-        <input type="text" th:field="*{department}" placeholder="Enter your department" class="form-control col-4 mb-4" />
-        <input type="text" th:field="*{phone}" placeholder="Enter your phone" class="form-control col-4 mb-4" />
-        <input type="text" th:field="*{jobTitle}" placeholder="Enter your job title" class="form-control col-4 mb-4" />
-        <input type="text" th:field="*{salary}" placeholder="Enter your job salary" class="form-control col-4 mb-4" />
-        <button type="submit" class="btn btn-primary ">Send</button>
-        <input type="hidden" th:field="*{Id}"/>
+    <form method="POST" th:action="@{/saveEmployee}" th:object="${employee}">
+        <input class="form-control col-4 mb-4" placeholder="Enter your name" th:field="*{name}" type="text"/>
+        <input class="form-control col-4 mb-4" placeholder="Enter your email" th:field="*{email}" type="text"/>
+        <input class="form-control col-4 mb-4" placeholder="Enter your department" th:field="*{department}"
+               type="text"/>
+        <input class="form-control col-4 mb-4" placeholder="Enter your phone" th:field="*{phone}" type="text"/>
+        <input class="form-control col-4 mb-4" placeholder="Enter your job title" th:field="*{jobTitle}" type="text"/>
+        <!--        <input type="text" th:field="*{salary}" placeholder="Enter your job salary" class="form-control col-4 mb-4" />-->
+        <button class="btn btn-primary " type="submit">Send</button>
+        <input th:field="*{Id}" type="hidden"/>
     </form>
     <hr/>
     <a th:href="@{/list}">Back to list</a>

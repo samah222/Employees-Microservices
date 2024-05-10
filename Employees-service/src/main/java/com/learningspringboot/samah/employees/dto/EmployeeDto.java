@@ -1,9 +1,7 @@
 package com.learningspringboot.samah.employees.dto;
 
 import com.learningspringboot.samah.employees.Util.EmployeeType;
-import com.learningspringboot.samah.employees.Util.UserRole;
-import com.learningspringboot.samah.employees.model.*;
-import lombok.Builder;
+import com.learningspringboot.samah.employees.model.Address;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,12 +14,14 @@ public class EmployeeDto {
     private String employeeName;
     private String phone;
     private String jobTitle;
-    private Department department;
+    private Integer departmentId;
     private Address address;
-    private Employee manager;
-    private List<Project> projects;
+    private Integer managerId;
+    private List<Integer> projectsIds;
     private Integer userId;
-    private EmployeeType employeeType ;
-    private UserRole role;
-    private String email;
+    private EmployeeType employeeType;
+    private Double salary;
+    private Double bonus;
+    private Double hourlyRate;
+    private Integer hoursWorkedPerWeek;
 }

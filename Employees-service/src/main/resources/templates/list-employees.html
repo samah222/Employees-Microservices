@@ -1,11 +1,12 @@
 <html xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, myUser-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, myUser-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>List Employees</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" rel="stylesheet">
     <link href="https://cdn.datatables.net/v/bs4/jq-3.7.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
 </head>
 <body>
@@ -14,32 +15,32 @@
         List Employees
     </h2>
     <hr/>
-    <a th:href="@{/addEmployeeForm}" class="btn btn-primary mb-2">Add Employee</a>
-    <table border =1 class="table table-bordered table-striped " id="employee-table">
+    <a class="btn btn-primary mb-2" th:href="@{/v1/employee/addEmployeeForm}">Add Employee</a>
+    <table border=1 class="table table-bordered table-striped " id="employee-table">
         <thead>
-            <tr>
-                <th> Name</th>
-                <th> Email</th>
-                <th> Dept</th>
-                <th> Salary</th>
-                <th> Job Title</th>
-                <th> Phone</th>
-                <th> Actions</th>
-            </tr>
+        <tr>
+            <th> Name</th>
+            <th> Email</th>
+            <th> Dept</th>
+            <th> Salary</th>
+            <th> Job Title</th>
+            <th> Phone</th>
+            <th> Actions</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="employee:${employees}">
-                <td th:text="${employee.name}"></td>
-                <td th:text="${employee.email}"></td>
-                <td th:text="${employee.department}"></td>
-                <td th:text="${employee.salary}"></td>
-                <td th:text="${employee.jobTitle}"></td>
-                <td th:text="${employee.phone}"></td>
-                <td>
-                    <a th:href="@{/showUpdateForm(employeeId=${employee.id})}" class="btn btn-info">Update </a>
-                    <a th:href="@{/deleteEmployee(employeeId=${employee.id})}" class="btn btn-danger ml-2">Delete </a>
-                </td>
-            </tr>
+        <tr th:each="employee:${employees}">
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.email}"></td>
+            <td th:text="${employee.department}"></td>
+            <td th:text="${employee.salary}"></td>
+            <td th:text="${employee.jobTitle}"></td>
+            <td th:text="${employee.phone}"></td>
+            <td>
+                <a class="btn btn-info" th:href="@{/showUpdateForm(employeeId=${employee.id})}">Update </a>
+                <a class="btn btn-danger ml-2" th:href="@{/deleteEmployee(employeeId=${employee.id})}">Delete </a>
+            </td>
+        </tr>
         </tbody>
     </table>
 
@@ -55,6 +56,7 @@
             }]
         });
     })
+
 </script>
 </body>
 </html>

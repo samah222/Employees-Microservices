@@ -7,13 +7,14 @@ import java.util.List;
 
 public interface EmployeeService {
     public List<EmployeeDto> getAllEmployees(int pageNumber, int pageSize);
+
     public List<Employee> getAllEmployees();
 
-    public Employee addEmployee(Employee employee);
+    public EmployeeDto addEmployee(EmployeeDto employeeDto);
 
-    public Employee editEmployee(Employee employee);
+    public EmployeeDto editEmployee(EmployeeDto employeeDto);
 
-    public Employee getEmployee(int id);
+    public EmployeeDto getEmployee(int id);
 
     public void deleteEmployee(int Id);
 

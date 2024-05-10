@@ -1,24 +1,22 @@
 package com.learningspringboot.samah.employees.initialization;
 
-import com.learningspringboot.samah.employees.model.Address;
 import com.learningspringboot.samah.employees.model.Department;
-import com.learningspringboot.samah.employees.model.Employee;
 import com.learningspringboot.samah.employees.repository.DepartmentRepository;
 import com.learningspringboot.samah.employees.repository.EmployeeRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
 public class DataInitializer {
+    Department department1 = new Department(1, "Sale", null);
+    Department department2 = new Department(2, "IT", null);
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
-    Department department1 = new Department(1,"Sale", null);
-    //@PostConstruct
+
+    @PostConstruct
     public void initialize() {
         initializeDepartment();
         //initializeEmployee();
@@ -34,6 +32,7 @@ public class DataInitializer {
 
     private void initializeDepartment() {
         departmentRepository.save(department1);
+        departmentRepository.save(department2);
     }
 
 }
