@@ -1,7 +1,7 @@
 package com.learningspringboot.samah.employees.service.impl;
 
 import com.learningspringboot.samah.employees.model.MyUser;
-import com.learningspringboot.samah.employees.repository.UserRepository;
+import com.learningspringboot.samah.employees.repository.MyUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailService implements UserDetailsService {
 
     @Autowired
-    private UserRepository repository;
+    private MyUserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

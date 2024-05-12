@@ -18,11 +18,7 @@ public class ChangePasswordVerificationToken {
     private Long id;
     private String token;
     private LocalDateTime expirationTime;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "FK_CHANGE_PASSWORD_VERIFY_TOKEN"))
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "changePasswordVerificationToken")
     private MyUser myUser;
 
     public ChangePasswordVerificationToken(MyUser myUser, String token) {

@@ -7,16 +7,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface UserService {
+public interface MyUserService {
     MyUser getUser(int id);
 
     List<MyUser> getUserAllUsers();
 
-    UserDto addNewUser(UserRegistrationDto userRegistrationDto);
+    MyUserDto addNewUser(UserRegistrationDto userRegistrationDto);
 
-    public CustomResponse validateVerificationToken(String token);
+    public CustomResponse validateVerificationToken(String token, int userId);
 
-    public UserDto updateUser(Integer id, UserDto dto);
+    public MyUserDto updateUser(Integer id, MyUserDto dto);
 
     CustomResponse resendVerificationToken(String email);
 
@@ -26,9 +26,11 @@ public interface UserService {
 
     public CustomResponse resetPassword(ResetPasswordDto resetPasswordDto);
 
-    public UserDto getUserById(Integer id);
+    public MyUserDto getUserById(Integer id);
 
     public void deleteUserById(Integer id);
 
-    public List<UserDto> getAllUsers();
+    public List<MyUserDto> getAllUsers();
+
+    MyUserDto createNewUserforAuthentication(UserRegistrationDto userRegistrationDto);
 }

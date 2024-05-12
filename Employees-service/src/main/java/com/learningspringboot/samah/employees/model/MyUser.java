@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MyUser extends TrackingEntity  { //implements UserDetails
+public class MyUser extends TrackingEntity { //implements UserDetails
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -36,9 +36,22 @@ public class MyUser extends TrackingEntity  { //implements UserDetails
     @Column(name = "role")
     private UserRole role;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reset_verification_token_id")
+    private ResetVerificationToken resetVerificationToken;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "change_password_verification_token_id")
+    private ChangePasswordVerificationToken changePasswordVerificationToken;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "verification_token")
+    private VerificationToken verificationToken;
+
     private int tokens = 0;
     private boolean enabled = false;
 

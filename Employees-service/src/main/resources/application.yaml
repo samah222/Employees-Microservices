@@ -4,6 +4,7 @@ application:
 server:
   port: 8070
 logging:
+  level: debug
   file:
     path: application.log
 
@@ -24,9 +25,9 @@ spring:
   application:
     name: Employees management system
   datasource:
-    password: E15@root
+    password: Sm1234567!
     url: jdbc:mysql://localhost:3306/employees_development
-    username: root
+    username: samah
   http:
     converters:
       preferred-json-mapper: jackson
@@ -52,11 +53,11 @@ rabbitmq:
     name: routing_key1
   topic-exchange:
     name: topicExchange1
-    
+
 management:
   tracing:
     sampling:
-      probability: 1.0
+      probability: 0.5
 
 ---
 application:
@@ -70,9 +71,9 @@ spring:
   application:
     name: Employees management system
   datasource:
-    password: E15@root
+    password: Sm1234567!
     url: jdbc:mysql://localhost:3306/employees_production
-    username: root
+    username: samah
   http:
     converters:
       preferred-json-mapper: jackson
@@ -114,9 +115,9 @@ spring:
   application:
     name: Employees management system
   datasource:
-    password: E15@root
+    password: Sm1234567!
     url: jdbc:mysql://localhost:3306/employees_QA
-    username: root
+    username: samah
   http:
     converters:
       preferred-json-mapper: jackson

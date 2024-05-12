@@ -19,10 +19,7 @@ public class ResetVerificationToken {
     private String token;
     private LocalDateTime expirationTime;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "FK_RESET_USER_VERIFY_TOKEN"))
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "resetVerificationToken")
     private MyUser myUser;
 
     public ResetVerificationToken(MyUser myUser, String token) {

@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
-    private UserRepository userRepository;
+    private MyUserRepository userRepository;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired

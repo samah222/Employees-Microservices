@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class UserDto {
+public class MyUserDto {
     private Integer userId;
     private String email;
     private UserRole role;

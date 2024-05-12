@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<MyUser,Integer> {
+public interface MyUserRepository extends JpaRepository<MyUser, Integer> {
     MyUser findByEmail(String em);
+
     @Modifying
     @Transactional
     @Query("update MyUser u set u.enabled = :en")

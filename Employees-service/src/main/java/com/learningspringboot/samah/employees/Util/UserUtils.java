@@ -9,6 +9,7 @@ public class UserUtils {
     public static final int USER_NOT_AUTHENTICATED = 603;
     public static final int REGISTRATION_TOKEN_EXPIRED = 610;
     public static final int REGISTRATION_TOKEN_NOT_FOUND = 615;
+    public static final int REGISTRATION_TOKEN_NOT_VALID = 616;
     public static final int RESET_TOKEN_NOT_FOUND = 611;
     public static final int RESET_TOKEN_NOT_MATCHED = 612;
     public static final int RESET_TOKEN_EXPIRED = 613;
