@@ -104,7 +104,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     private void sendEmailForAddingNewUser(String token, MyUser savedMyUser) {
         String url = "http://" + infoService.getApplicationServer() + ":" + infoService.getServerPort()
-                + "/v1/users/verifyRegistration?userid=" + savedMyUser.getId().toString() + "&token=" + token;
+                + "/v1/user/verifyRegistration?userid=" + savedMyUser.getId().toString() + "&token=" + token;
         producer.sendJsonMessage(new Mail(savedMyUser.getEmail(), "Registration token for ABC Company",
                 "Welcome to our company !! please click in the following token to complete the registration: " + url));
     }
@@ -188,7 +188,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     private void sendEmailForResendVerificationToken(String email, String token) {
         String url = "http://" + infoService.getApplicationServer() + ":" + infoService.getServerPort()
-                + "/v1/users/newToken?token=" + token;
+                + "/v1/user/newToken?token=" + token;
         producer.sendJsonMessage(new Mail(email, "BookStore Registration Resend Token",
                 " Please click on this url to confirm your email : " + url));
     }
@@ -242,7 +242,7 @@ public class MyUserServiceImpl implements MyUserService {
 
     private void sendEmailForRequestResetPassword(String token, MyUser user) {
         String url = "http://" + infoService.getApplicationServer() + ":" + infoService.getServerPort()
-                + "/v1/users/resetPassword?token=" + token;
+                + "/v1/user/resetPassword?token=" + token;
         producer.sendJsonMessage(new Mail(user.getEmail(), "BookStore- Token for Request Reset Password"
                 , " Please click on this url to reset your password : " + url));
     }

@@ -29,6 +29,13 @@ public class EmployeeController {
     @Autowired
     private PartTimeEmployeeService partTimeEmployeeService;
 
+    @Operation(summary = "Add an employee ", description = "Add an employee")
+    @ApiResponses(value = {@ApiResponse(responseCode = "201")})
+    @PostMapping
+    public ResponseEntity<EmployeeDto> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+        return new ResponseEntity<EmployeeDto>(employeeService.addEmployee(employeeDto), HttpStatus.CREATED);
+    }
+
     @Operation(summary = "Get pages for all employees ", description = "Get pages for all employees")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
     @GetMapping
@@ -82,12 +89,6 @@ public class EmployeeController {
         return "redirect:/list";
     }
 
-    @Operation(summary = "Add an employee ", description = "Add an employee")
-    @ApiResponses(value = {@ApiResponse(responseCode = "201")})
-    @PostMapping
-    public ResponseEntity<EmployeeDto> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
-        return new ResponseEntity<EmployeeDto>(employeeService.addEmployee(employeeDto), HttpStatus.CREATED);
-    }
 
     @Operation(summary = "Edit an employee ", description = "Edit an employee")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
@@ -99,7 +100,7 @@ public class EmployeeController {
 
     @Operation(summary = "Get an employee ", description = "Edit an employee")
     @ApiResponses(value = {@ApiResponse(responseCode = "200")})
-    @GetMapping("/{Id}")
+    @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployee(@PathVariable("id") int id) {
         return new ResponseEntity<EmployeeDto>(employeeService.getEmployee(id), HttpStatus.OK);
     }

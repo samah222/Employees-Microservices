@@ -38,21 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private RabbitmqMailProducer producer;
 
-    @Override
-    public List<EmployeeDto> getAllEmployees(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return employeeRepository.findAll(pageable)
-                .getContent().stream()
-                .map(EmployeeMapper::employeeToEmployeeDto).toList();
-    }
-
-    @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
-    public EmployeeDto addEmployee(EmployeeDto employeeDto) {
+    private boolean validateEmployeeDto(EmployeeDto employeeDto) {
         if (employeeDto.getEmployeeName().isBlank()
                 || employeeDto.getPhone().isBlank()
                 || employeeDto.getDepartmentId().toString().isBlank()
@@ -75,6 +61,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if (!EnumSet.allOf(EmployeeType.class).contains(employeeDto.getEmployeeType()))
             throw new InvalidDataException("Invalid employee type");
+
+        if (employeeRepository.findByUser(MyUser.builder().id(employeeDto.getUserId()).build()).isPresent())
+            throw new InvalidDataException("User id already exist");
+        return true;
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return employeeRepository.findAll(pageable)
+                .getContent().stream()
+                .map(EmployeeMapper::employeeToEmployeeDto).toList();
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public EmployeeDto addEmployee(EmployeeDto employeeDto) {
+        if (!validateEmployeeDto(employeeDto))
+            throw new RuntimeException("Employee Data not valid");
 
         Department department = departmentRepository.findById(employeeDto.getDepartmentId())
                 .orElseThrow(() -> new InvalidDataException("Department not found"));

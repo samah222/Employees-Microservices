@@ -21,7 +21,7 @@
         <tr>
             <th> Name</th>
             <th> Email</th>
-            <th> Dept</th>
+            <!--            <th> Dept</th>-->
             <th> Salary</th>
             <th> Job Title</th>
             <th> Phone</th>
@@ -30,9 +30,9 @@
         </thead>
         <tbody>
         <tr th:each="employee:${employees}">
-            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.employeeName}"></td>
             <td th:text="${employee.email}"></td>
-            <td th:text="${employee.department}"></td>
+            <!--            <td th:text="${employee.department}"></td>-->
             <td th:text="${employee.salary}"></td>
             <td th:text="${employee.jobTitle}"></td>
             <td th:text="${employee.phone}"></td>
@@ -56,6 +56,9 @@
             }]
         });
     })
+
+
+
 
 </script>
 </body>
