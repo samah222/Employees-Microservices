@@ -17,6 +17,8 @@ import java.util.Optional;
 public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private ProjectMapper mapper;
 
     @Override
     public ProjectDto addProject(ProjectDto projectDto) {
@@ -24,22 +26,22 @@ public class ProjectServiceImpl implements ProjectService {
             throw new InvalidDataException("Project name can not be null");
         if (projectDto.getProjectName().length() < 2 || projectDto.getProjectName().length() > 30)
             throw new InvalidDataException("Project name is not valid");
-        Project project = ProjectMapper.dtoToProject(projectDto);
+        Project project = mapper.dtoToProject(projectDto);
         Project savedProject = projectRepository.save(project);
-        return ProjectMapper.projectToDto(savedProject);
+        return mapper.projectToDto(savedProject);
     }
 
     @Override
     public ProjectDto getProjectById(Integer id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project not found with id: " + id));
-        return ProjectMapper.projectToDto(project);
+        return mapper.projectToDto(project);
     }
 
     @Override
     public List<ProjectDto> getAllProjects() {
         List<Project> projects = projectRepository.findAll();
-        return projects.stream().map(ProjectMapper::projectToDto).toList();
+        return projects.stream().map(mapper::projectToDto).toList();
     }
 
     @Override
@@ -56,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
         );
 
         Project updatedProject = projectRepository.save(existingProject);
-        return ProjectMapper.projectToDto(updatedProject);
+        return mapper.projectToDto(updatedProject);
     }
 
     @Override

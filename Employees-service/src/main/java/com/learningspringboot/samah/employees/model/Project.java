@@ -15,17 +15,22 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Project extends TrackingEntity{
+public class Project extends TrackingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(min = 2, max=30, message = "project name should be between 2 and 30 characters")
-    @Column(name = "name", nullable = false )
+    @Size(min = 2, max = 30, message = "project name should be between 2 and 30 characters")
+    @Column(name = "name", nullable = false)
     @NotBlank
     private String projectName;
 
     @ManyToMany(mappedBy = "projects")
     private List<Employee> employees;
+
+    public Project(int id, String name) {
+        this.id = id;
+        this.projectName = name;
+    }
 
 }

@@ -2,26 +2,26 @@ package com.learningspringboot.samah.employees.mapping;
 
 import com.learningspringboot.samah.employees.dto.ProjectDto;
 import com.learningspringboot.samah.employees.model.Project;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
+@Data
+@Service
 public class ProjectMapper {
 
-    private ProjectMapper() {
-        // Private constructor to prevent instantiation
+    public ProjectDto projectToDto(Project project) {
+        ProjectDto dto = new ProjectDto();
+        dto.setProjectName(project.getProjectName());
+        dto.setId(project.getId());
+        return dto;
     }
 
-    public static ProjectDto projectToDto(Project project) {
-        return ProjectDto.builder()
-                .id(project.getId())
-                .projectName(project.getProjectName())
-                // Map other fields as needed
-                .build();
-    }
-
-    public static Project dtoToProject(ProjectDto projectDto) {
-        return Project.builder()
-                .id(projectDto.getId())
-                .projectName(projectDto.getProjectName())
-                // Map other fields as needed
-                .build();
+    public Project dtoToProject(ProjectDto projectDto) {
+        Project project = new Project();
+        project.setProjectName(projectDto.getProjectName());
+        project.setId(projectDto.getId());
+        return project;
     }
 }
