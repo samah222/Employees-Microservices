@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   employee:
-    image: employee
+    image: employee-services/employee
     ports:
       - "8070:8070"
     depends_on:

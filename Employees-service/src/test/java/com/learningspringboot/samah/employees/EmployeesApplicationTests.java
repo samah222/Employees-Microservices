@@ -1,23 +1,12 @@
 package com.learningspringboot.samah.employees;
 
-import com.learningspringboot.samah.employees.repository.EmployeeRepository;
-import com.learningspringboot.samah.employees.service.impl.EmployeeServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-//import static org.junit.Assert.*;
-
-//import static org.assertj.core.api.ClassBasedNavigableIterableAssert.assertThat;
-
-//import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@SpringBootTest
-class EmployeesApplicationTests {
+//@SpringBootTest
+//class EmployeesApplicationTests {
 
 //	@MockBean
-	EmployeeRepository employeeRepository;
-	@Autowired
-	EmployeeServiceImpl employeeService;
+//	EmployeeRepository employeeRepository;
+//	@Autowired
+//	EmployeeServiceImpl employeeService;
 //
 //	@BeforeEach
 //	void setUp(){
@@ -42,4 +31,4 @@ class EmployeesApplicationTests {
 //		assertEquals(employeeName,found.getName());
 //	}
 
-}
+//}
