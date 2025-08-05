@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Employees Microservices.iml" filepath="$PROJECT_DIR$/Employees Microservices.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Employees-service/employees.iml" filepath="$PROJECT_DIR$/Employees-service/employees.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mail-service/mail-service.iml" filepath="$PROJECT_DIR$/Mail-service/mail-service.iml" />
     </modules>
   </component>
 </project>

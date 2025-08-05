@@ -20,11 +20,11 @@ public class MyUserDetailService implements UserDetailsService {
         //Optional<MyUser> myUser = repository.findByEmail(email);
         MyUser myUser = repository.findByEmail(email);
         if (myUser != null) {
-            return User.builder()
-                    .username(myUser.getEmail())
+            return new CustomUserDetails(MyUser.builder()
+                    .email(myUser.getEmail())
                     .password(myUser.getPassword())
-                    .roles(myUser.getRole().toString()) //"ADMIN"
-                    .build();
+                    .role(myUser.getRole()) //"ADMIN"
+                    .build());
         } else {
             throw new UsernameNotFoundException(email);
         }
