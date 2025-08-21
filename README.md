@@ -31,6 +31,15 @@ To run the application (using terminal) with development profile:
     cd .\target\
     java -jar .\employees-1.0.1.jar --spring.profiles.active=dev
 
+To run RabbitMQ using docker, run the following command:
+
+    docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+    
+Then you can open the management GUI : 
+
+    http://localhost:15672/
+    
+
 ## Project Technologies
 
 1. Spring Boot (Spring web, Spring Validation, Spring JPA, Spring Security)
